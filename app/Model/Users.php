@@ -15,7 +15,7 @@ class Users extends Model
      * @var array
      */
     protected $fillable = [
-        'uid', 'status'
+        'uid', 'status',
     ];
 
     /**
@@ -24,6 +24,6 @@ class Users extends Model
      * @var array
      */
     protected $hidden = [
-        'uid'
+        'uid',
     ];
 }

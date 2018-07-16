@@ -12,11 +12,7 @@
  */
 
 // API
-$router->group(['namespace' => 'Api'], function () use ($router) {
-    $router->get('/', 'IndexController@index');
-});
-
-$router->get('/key', function () {
-    // var_dump(hash_hmac('sha1','o4_uIw-iO8no-XKmnwa35by3QUpA','o4_uIw-iO8no-XKmnwa35by3QUpA'));
-    return base64_encode(md5(sha1(str_random(32), true), true) . md5(sha1(str_random(32), true), true));
+$router->group(['namespace' => 'Api', 'prefix' => 'api'], function () use (&$router) {
+    $router->get('index', 'IndexController@index');
+    $router->get('login', 'IndexController@login');
 });
