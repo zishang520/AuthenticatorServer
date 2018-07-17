@@ -22,8 +22,8 @@ class IndexController extends ApiController
     public function index()
     {
         $user = Users::updateOrCreate(['uid' => hash_hmac('sha1', 'oCJUswyqG0fw5997L9wCQ9AjQwIw', 'oCJUswyqG0fw5997L9wCQ9AjQwIw')], []);
-        Cache::store('redis')->set('bar', 'baz');
-        var_dump(Cache::store('redis')->get('bar'));
+        // var_export(Cache::put('bar', 'baz', 30));
+        // var_export(Cache::get('bar'));
         return response($user);
     }
 

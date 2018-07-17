@@ -12,7 +12,7 @@
  */
 
 // API
-$router->group(['namespace' => 'Api', 'prefix' => 'api'], function () use (&$router) {
+$router->group(['namespace' => 'Api', 'middleware' => 'auth', 'prefix' => 'api'], function () use (&$router) {
     $router->get('index', 'IndexController@index');
     $router->get('login', 'IndexController@login');
 });
