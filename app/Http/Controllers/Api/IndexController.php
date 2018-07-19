@@ -3,9 +3,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use App\Model\Users;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Log;
 use luoyy\Wechat\Facades\Wechat;
 
 class IndexController extends ApiController
@@ -34,9 +34,10 @@ class IndexController extends ApiController
         return response(['token' => Crypt::encrypt($user)]);
     }
 
-    public function test()
+    public function test(Request $request)
     {
-        var_dump(Wechat::getSessionKey('ssss'));
+        $data = $this->validate($request, ['code' => 'required|string'], ['code.required' => '不合法的Oauth_code', 'code.string' => 'Oauth_code只能是字符串']);
+        var_dump(Wechat::getSessionKey($data['code']));
         var_dump(Wechat::getError());
     }
 }
