@@ -1363,16 +1363,16 @@
         },
         {
             "name": "luoyy/laravel-wechat-sdk",
-            "version": "v1.0.1",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zishang520/laravel-wechat-sdk.git",
-                "reference": "a0bb28cd4dabd2a6006081685b9a215111e9f8c5"
+                "reference": "06e1fa5549ef865223b9c1ee381e0369909dab95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zishang520/laravel-wechat-sdk/zipball/a0bb28cd4dabd2a6006081685b9a215111e9f8c5",
-                "reference": "a0bb28cd4dabd2a6006081685b9a215111e9f8c5",
+                "url": "https://api.github.com/repos/zishang520/laravel-wechat-sdk/zipball/06e1fa5549ef865223b9c1ee381e0369909dab95",
+                "reference": "06e1fa5549ef865223b9c1ee381e0369909dab95",
                 "shasum": ""
             },
             "require": {
@@ -1398,7 +1398,7 @@
                 "wechat",
                 "weixin"
             ],
-            "time": "2018-07-19 02:56:00"
+            "time": "2018-07-19 06:06:45"
         },
         {
             "name": "monolog/monolog",

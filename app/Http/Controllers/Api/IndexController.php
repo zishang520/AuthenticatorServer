@@ -36,7 +36,7 @@ class IndexController extends ApiController
 
     public function test()
     {
-        var_dump(Wechat::getSessionKey());
+        var_dump(Wechat::getSessionKey('ssss'));
         var_dump(Wechat::getError());
     }
 }
