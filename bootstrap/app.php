@@ -64,7 +64,7 @@ $app->singleton(
 // ]);
 
 $app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
+    'auth' => App\Http\Middleware\Authenticate::class
 ]);
 
 /*
@@ -82,6 +82,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
+$app->register(luoyy\Wechat\Providers\WechatServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -95,7 +96,7 @@ $app->register(Illuminate\Redis\RedisServiceProvider::class);
  */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers',
+    'namespace' => 'App\Http\Controllers'
 ], function ($router) {
     require __DIR__ . '/../routes/web.php';
 });

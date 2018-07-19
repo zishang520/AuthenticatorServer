@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use App\Model\Users;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
+use luoyy\Wechat\Facades\Wechat;
 
 class IndexController extends ApiController
 {
@@ -23,7 +24,7 @@ class IndexController extends ApiController
     {
         $user = Users::updateOrCreate(['uid' => hash_hmac('sha1', 'oCJUswyqG0fw5997L9wCQ9AjQwIw', 'oCJUswyqG0fw5997L9wCQ9AjQwIw')], []);
         // var_export(Cache::put('bar', 'baz', 30));
-        // var_export(Cache::get('bar'));
+        var_export(Cache::get('bar'));
         return response($user);
     }
 
@@ -31,5 +32,11 @@ class IndexController extends ApiController
     {
         $user = Users::updateOrCreate(['uid' => hash_hmac('sha1', 'oCJUswyqG0fw5997L9wCQ9AjQwIw', 'oCJUswyqG0fw5997L9wCQ9AjQwIw')], []);
         return response(['token' => Crypt::encrypt($user)]);
+    }
+
+    public function test()
+    {
+        var_dump(Wechat::getSessionKey());
+        var_dump(Wechat::getError());
     }
 }

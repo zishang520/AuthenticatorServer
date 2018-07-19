@@ -16,3 +16,4 @@ $router->group(['namespace' => 'Api', 'middleware' => 'auth', 'prefix' => 'api']
     $router->get('index', 'IndexController@index');
     $router->get('login', 'IndexController@login');
 });
+$router->get('test', 'Api\IndexController@test');
