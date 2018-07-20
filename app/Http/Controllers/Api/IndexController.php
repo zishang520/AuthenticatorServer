@@ -32,9 +32,9 @@ class IndexController extends ApiController
         if ($validator->fails()) {
             return self::dump(20001, $validator->errors()->first());
         }
-        if (!Wechat::getSessionKey($input['code'])) {
+        if (($data = Wechat::getSessionKey($input['code'])) === false) {
             return self::dump(20005, Wechat::getError()['errText']);
         }
-        return self::dump(0, '获取成功');
+        return self::dump(0, '获取成功', $data);
     }
 }

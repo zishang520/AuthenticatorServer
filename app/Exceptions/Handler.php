@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof MethodNotAllowedHttpException) {
             return response()->json([
                 'code' => -1,
-                'msg' => '您请求类型的不支持',
+                'msg' => '您请求的类型不支持',
                 'data' => [
                     'method' => $request->method()
                 ]
