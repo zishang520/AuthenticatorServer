@@ -15,7 +15,7 @@ class ApiController extends BaseController
      * @param     [type] $data [数据]
      * @return    [type] [Response对象]
      */
-    public static function dump($code, $msg, $data = null)
+    protected static function dump($code, $msg, $data = null)
     {
         return response()->json([
             'code' => $code,
