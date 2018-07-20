@@ -35,6 +35,18 @@ class IndexController extends ApiController
         if (($data = Wechat::getSessionKey($input['code'])) === false) {
             return self::dump(20005, Wechat::getError()['errText']);
         }
-        return self::dump(0, '获取成功', $data);
+        $openid = $data['openid'] ?? null;
+        if (empty($openid)) {
+            return self::dump(20005, 'OPENID获取失败');
+        }
+        $session_key = $data['session_key'] ?? null;
+        if (empty($session_key)) {
+            return self::dump(20005, 'SESSION_KEY获取失败');
+        }
+        $user = Users::updateOrCreate(['ud' => hash_hmac('sha1', $openid, md5($openid))], []);
+
+        return self::dump(0, '获取成功', [
+            'token' => base64_safe_encode(Crypt::encrypt($user)),
+        ]);
     }
 }
