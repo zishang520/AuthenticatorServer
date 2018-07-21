@@ -12,8 +12,10 @@
  */
 
 // API
-$router->group(['namespace' => 'Api', 'middleware' => 'auth', 'prefix' => 'api'], function () use (&$router) {
-    $router->get('index', 'IndexController@index');
-    $router->get('login', 'IndexController@login');
+
+$router->group(['namespace' => 'Api', 'prefix' => 'api'], function () use ($router) {
+    $router->post('login', 'IndexController@login');
+    $router->group(['middleware' => 'auth'], function () use ($router) {
+        $router->post('detil', 'IndexController@detil');
+    });
 });
-$router->get('test', 'Api\IndexController@test');

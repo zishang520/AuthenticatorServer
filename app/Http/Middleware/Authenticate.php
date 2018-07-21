@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -36,7 +35,11 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
+            return response()->json([
+                'code' => 40001,
+                'msg' => '身份验证失败，请重新获取TOKEN',
+                'data' => null
+            ]);
         }
 
         return $next($request);

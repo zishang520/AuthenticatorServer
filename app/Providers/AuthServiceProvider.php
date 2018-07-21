@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Providers;
 
-use App\Model\Users;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -31,7 +29,15 @@ class AuthServiceProvider extends ServiceProvider
         // the User instance via an API token or any other method necessary.
 
         $this->app['auth']->viaRequest('api', function ($request) {
-            return 1;
+            try {
+                $token = $request->header('TOKEN') ?: $request->input('_TOKEN');
+                if (empty($token)) {
+                    return null;
+                }
+                return Crypt::decrypt(base64_safe_decode($token));
+            } catch (\Exception $e) {
+                return null;
+            }
         });
     }
 }

@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id'); // id
             $table->string('uid', 120)->nullable(false)->default(''); // uid 加密后的openid
             $table->unsignedTinyInteger('status')->default(1);
+            $table->datetime('last_login_time');
             $table->timestamps();
             $table->unique('uid', 'unique_uid');
         });

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model;
 
 use Illuminate\Auth\Authenticatable;
@@ -18,15 +17,11 @@ class Users extends Model implements AuthenticatableContract, AuthorizableContra
      *
      * @var array
      */
-    protected $fillable = [
-        'uid', 'status',
-    ];
+    protected $fillable = ['uid', 'status', 'last_login_time'];
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = [
-        'uid',
-    ];
+    protected $hidden = [];
 }
