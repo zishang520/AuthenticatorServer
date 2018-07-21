@@ -1,6 +1,7 @@
 <?php
 namespace App\Providers;
 
+use App\Model\Users;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\ServiceProvider;
@@ -41,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
                     Cache::forget($user['uid']);
                     return null;
                 }
-                return $user;
+                return Users::where('uid', $user['uid'])->first();
             } catch (\Exception $e) {
                 return null;
             }

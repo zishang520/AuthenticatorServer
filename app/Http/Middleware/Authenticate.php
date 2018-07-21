@@ -37,11 +37,17 @@ class Authenticate
         if ($this->auth->guard($guard)->guest()) {
             return response()->json([
                 'code' => 40001,
-                'msg' => '身份验证失败，请重新获取TOKEN',
+                'msg' => '身份验证失败',
                 'data' => null
             ]);
         }
-
+        if ($request->user()->status == 0) {
+            return response()->json([
+                'code' => 40002,
+                'msg' => '账户被禁用',
+                'data' => null
+            ]);
+        }
         return $next($request);
     }
 }
