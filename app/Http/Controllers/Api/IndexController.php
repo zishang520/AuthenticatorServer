@@ -34,10 +34,11 @@ class IndexController extends ApiController
                 return self::dump(20005, 'SESSION_KEY加密失败');
             }
             $user = Users::updateOrCreate(['uid' => hash_hmac('sha1', $openid, md5($openid))], ['last_login_time' => date('Y-m-d H:i:s')])->toArray();
-            Cache::put($user['uid'], $encrypt_session_key, 1440); // 缓存一份用作为单用户登录
+            $token = base64_safe_encode(Crypt::encrypt($user));
+            Cache::put($user['uid'], $token, 1440); // 缓存一份用作为单用户登录
             return self::dump(0, '获取成功', [
                 'session_key' => $encrypt_session_key,
-                'token' => base64_safe_encode(Crypt::encrypt($user))
+                'token' => $token
             ]);
         } catch (\Exception $e) {
             return self::dump(20005, '数据记录出现错误');

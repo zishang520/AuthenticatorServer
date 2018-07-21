@@ -1,6 +1,7 @@
 <?php
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\ServiceProvider;
 
@@ -34,7 +35,13 @@ class AuthServiceProvider extends ServiceProvider
                 if (empty($token)) {
                     return null;
                 }
-                return Crypt::decrypt(base64_safe_decode($token));
+                $token = base64_safe_decode($token);
+                $user = Crypt::decrypt($token);
+                if (Cache::get($user['uid']) !== $token) {
+                    Cache::forget($user['uid']);
+                    return null;
+                }
+                return $user;
             } catch (\Exception $e) {
                 return null;
             }
