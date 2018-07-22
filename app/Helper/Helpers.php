@@ -82,9 +82,7 @@ if (!function_exists('safe_decrypt')) {
         if (!hash_equals(hash_hmac('sha256', $payload['mac'], $bytes, true), hash_hmac('sha256', hash_hmac('sha256', $payload['iv'] . $payload['value'], $key), $bytes, true))) {
             return false;
         }
-        $iv = hex2bin($payload['iv']);
-        $decrypted = openssl_decrypt($payload['value'], $cipher, $key, 0, $iv);
-        return $decrypted;
+        return openssl_decrypt($payload['value'], $cipher, $key, 0, hex2bin($payload['iv']));
     }
 }
 
@@ -101,7 +99,7 @@ if (!function_exists('gen_sign')) {
     function gen_sign(array $data, $key)
     {
         ksort($data);
-        return hash_hmac('sha1', json_encode($data), $key);
+        return hash_hmac('sha1', http_build_query($data), $key);
     }
 }
 
@@ -121,6 +119,6 @@ if (!function_exists('check_sign')) {
         unset($data['sign']);
         ksort($data);
         $bytes = random_bytes(16);
-        return hash_equals(hash_hmac('sha256', $sign, $bytes, true), hash_hmac('sha256', hash_hmac('sha1', json_encode($data), $key), $bytes, true));
+        return hash_equals(hash_hmac('sha256', $sign, $bytes, true), hash_hmac('sha256', hash_hmac('sha1', http_build_query($data), $key), $bytes, true));
     }
 }
