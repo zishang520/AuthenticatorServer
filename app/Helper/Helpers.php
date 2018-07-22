@@ -87,3 +87,40 @@ if (!function_exists('safe_decrypt')) {
         return $decrypted;
     }
 }
+
+if (!function_exists('gen_sign')) {
+    /**
+     * [gen_sign 生成sign]
+     * @Author    ZiShang520@gmail.com
+     * @DateTime  2018-07-22T11:56:54+0800
+     * @copyright (c) ZiShang520 All Rights Reserved
+     * @param     array $data [description]
+     * @param     [type] $key [description]
+     * @return    [type] [description]
+     */
+    function gen_sign(array $data, $key)
+    {
+        ksort($data);
+        return hash_hmac('sha1', json_encode($data), $key);
+    }
+}
+
+if (!function_exists('check_sign')) {
+    /**
+     * [check_sign 测试签名]
+     * @Author    ZiShang520@gmail.com
+     * @DateTime  2018-07-22T11:56:54+0800
+     * @copyright (c) ZiShang520 All Rights Reserved
+     * @param     array $data [description]
+     * @param     [type] $key [description]
+     * @return    [type] [description]
+     */
+    function check_sign(array $data, $key, $sign = '')
+    {
+        $sign = empty($sign) ? $data['sign'] : $sign;
+        unset($data['sign']);
+        ksort($data);
+        $bytes = random_bytes(16);
+        return hash_equals(hash_hmac('sha256', $sign, $bytes, true), hash_hmac('sha256', hash_hmac('sha1', json_encode($data), $key), $bytes, true));
+    }
+}

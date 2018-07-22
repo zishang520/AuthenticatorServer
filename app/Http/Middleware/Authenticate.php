@@ -3,6 +3,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Support\Facades\Validator;
 
 class Authenticate
 {
@@ -38,14 +39,30 @@ class Authenticate
             return response()->json([
                 'code' => 40001,
                 'msg' => '身份验证失败',
-                'data' => null
+                'data' => null,
             ]);
         }
         if ($request->user()->status == 0) {
             return response()->json([
                 'code' => 40002,
                 'msg' => '账户被禁用',
-                'data' => null
+                'data' => null,
+            ]);
+        }
+        $input = $request->all();
+        $validator = Validator::make($input, ['t' => 'bail|required|string', 'sign' => 'bail|required|string'], ['t.required' => '参数错误', 't.string' => '参数错误', 'sign.required' => '参数错误', 'sign.string' => '参数错误']);
+        if ($validator->fails()) {
+            return response()->json([
+                'code' => 20001,
+                'msg' => $validator->errors()->first(),
+                'data' => null,
+            ]);
+        }
+        if (((int) $input['t'] <= time()) || (!check_sign($input, $request->user()->uid))) {
+            return response()->json([
+                'code' => 20001,
+                'msg' => '参数错误', // 签名错误或者请求失效
+                'data' => null,
             ]);
         }
         return $next($request);

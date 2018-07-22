@@ -16,7 +16,7 @@
 $router->group(['namespace' => 'Api', 'prefix' => 'api'], function () use ($router) {
     $router->post('login', 'IndexController@login');
     $router->group(['middleware' => 'auth'], function () use ($router) {
-        $router->get('get_secure_data', 'IndexController@get_secure_data');
+        $router->post('get_secure_data', 'IndexController@get_secure_data');
         $router->post('put_secure_data', 'IndexController@put_secure_data');
     });
 });
