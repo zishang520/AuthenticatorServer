@@ -31,7 +31,7 @@ class IndexController extends ApiController
             if (empty($session_key)) {
                 return self::dump(20005, 'SESSION_KEY获取失败');
             }
-            if (($encrypt_session_key = safe_encrypt($session_key, md5($input['code']))) === false) {
+            if (($encrypt_session_key = safe_encrypt($session_key, md5($input['code'], true))) === false) {
                 return self::dump(20005, 'SESSION_KEY加密失败');
             }
             $user = Users::updateOrCreate(['uid' => hash_hmac('sha1', $openid, md5($openid))], ['last_login_time' => date('Y-m-d H:i:s')])->toArray();
@@ -39,7 +39,7 @@ class IndexController extends ApiController
             Cache::put($user['uid'], $token, 1440); // 缓存一份用作为单用户登录
             return self::dump(0, '获取成功', [
                 'session_key' => $encrypt_session_key,
-                'token' => $token
+                'token' => $token,
             ]);
         } catch (\Exception $e) {
             return self::dump(20005, '数据记录出现错误');
