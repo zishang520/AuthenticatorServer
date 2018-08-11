@@ -12,7 +12,7 @@ class SafetyData extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_uid', 'encrypt_data'];
+    protected $fillable = ['user_uid', 'encrypt_data', 'is_independentpass'];
     /**
      * The attributes excluded from the model's JSON form.
      *
