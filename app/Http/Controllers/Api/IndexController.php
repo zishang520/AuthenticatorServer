@@ -75,11 +75,11 @@ class IndexController extends ApiController
     {
         try {
             $input = $request->all();
-            $validator = Validator::make($input, ['encrypt_data' => 'bail|required|string'], ['encrypt_data.required' => 'ENCRYPT_DATA不能为空', 'encrypt_data.string' => 'ENCRYPT_DATA只能是字符串']);
+            $validator = Validator::make($input, ['encrypt_data' => 'bail|required|string', 'is_independentpass' => 'bail|required|boolean'], ['encrypt_data.required' => 'ENCRYPT_DATA不能为空', 'encrypt_data.string' => 'ENCRYPT_DATA只能是字符串', 'is_independentpass.required' => '密码状态不能为空', 'is_independentpass.boolean' => '密码状态只能是一个布尔值']);
             if ($validator->fails()) {
                 return self::dump(20001, $validator->errors()->first());
             }
-            return self::dump(0, '更新数据成功', SafetyData::updateOrCreate(['user_uid' => $request->user()->uid], ['encrypt_data' => $input['encrypt_data']]));
+            return self::dump(0, '更新数据成功', SafetyData::updateOrCreate(['user_uid' => $request->user()->uid], ['encrypt_data' => $input['encrypt_data'], 'is_independentpass' => $input['is_independentpass']]));
         } catch (\Exception $e) {
             return self::dump(20005, '更新数据失败');
         }

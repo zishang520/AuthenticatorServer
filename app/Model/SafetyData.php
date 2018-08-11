@@ -19,4 +19,13 @@ class SafetyData extends Model
      * @var array
      */
     protected $hidden = ['user_uid'];
+
+    public function setIsIndependentpassAttribute($value)
+    {
+        $this->attributes['is_independentpass'] = (int) $value;
+    }
+    public function getIsIndependentpassAttribute($value)
+    {
+        return (bool) $value;
+    }
 }
