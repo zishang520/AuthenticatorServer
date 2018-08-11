@@ -18,6 +18,7 @@ class CreateSafetyDataTable extends Migration
             $table->bigIncrements('id'); // id
             $table->string('user_uid', 120)->nullable(false)->default(''); // user_uid 加密后的openid
             $table->longText('encrypt_data'); // 加密后的数据
+            $table->unsignedTinyInteger('is_independentpass')->default(0);
             $table->timestamps();
             $table->unique('user_uid', 'unique_uid');
             $table->foreign('user_uid')->references('uid')->on('users');
